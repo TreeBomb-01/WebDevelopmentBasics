@@ -1,0 +1,317 @@
+/* ------------------------------
+        기본 스타일
+------------------------------ */
+/*
+        styles/index.css
+        - 이 파일은 사이트의 전반적인 스타일을 담고 있습니다.
+        - 큰 섹션별로 주석으로 구분되어 있으며, 라이트/다크 테마는
+            `body.dark-mode` 규칙으로 관리됩니다.
+        - 색상이나 폰트는 이 파일 최상단의 `body` 또는 섹션 변수에서
+            변경하면 전체에 적용됩니다.
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Pretendard", sans-serif;
+}
+
+body {
+    background: #f7f9fb;
+    color: #111;
+    line-height: 1.6;
+}
+
+body.dark-mode {
+    background: #181a1b;
+    color: #f7f9fb;
+}
+
+/* 다크모드 전용 스타일 */
+body.dark-mode .header {
+    background: #23272a;
+    border-bottom: 1px solid #333;
+}
+
+body.dark-mode .logo img {
+    filter: brightness(0.85);
+}
+
+body.dark-mode .nav-list li a {
+    color: #f7f9fb;
+}
+
+body.dark-mode #darkToggle {
+    color: #f7f9fb;
+}
+
+body.dark-mode .hero-text h2,
+body.dark-mode .hero-text p {
+    color: #f7f9fb;
+}
+
+body.dark-mode .features {
+    background: #23272a;
+}
+
+body.dark-mode .feature-card {
+    background: #23272a;
+    color: #f7f9fb;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.18);
+}
+
+body.dark-mode .reviews {
+    background: #181a1b;
+    color: #f7f9fb;
+}
+
+body.dark-mode .review {
+    background: #23272a;
+    color: #f7f9fb;
+}
+
+body.dark-mode footer {
+    background: #23272a;
+    color: #f7f9fb;
+    border-top: 1px solid #333;
+}
+
+/* 다크모드에서 태양 아이콘을 흰색처럼 보이게 함 */
+body.dark-mode #darkToggle img[alt="Light Mode"] {
+    filter: invert(1) brightness(2) saturate(0);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ------------------------------
+    HEADER
+------------------------------ */
+.header {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+}
+
+.nav-list li a {
+    font-weight: 500;
+    color: #111;
+}
+
+#darkToggle {
+    padding: 6px 10px;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+/* ------------------------------
+    HERO SECTION
+------------------------------ */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 60px;
+    gap: 40px;
+}
+
+.hero-text {
+    max-width: 550px;
+}
+
+.hero-text h2 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 16px;
+}
+
+.cta {
+    background: #5d85f0;
+    padding: 12px 24px;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.cta:hover {
+    transform: scale(1.05);
+    background: #466edb;
+}
+
+.cta.secondary {
+    background: #ffffff;
+    color: #5d85f0;
+    border: 2px solid #5d85f0;
+}
+
+.cta.secondary:hover {
+    background: #5d85f0;
+    color: white;
+}
+
+.hero-img img {
+    width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* ------------------------------
+    FEATURES
+------------------------------ */
+.features {
+    padding: 80px 40px;
+    text-align: center;
+    background: none;
+}
+
+.features h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background: white;
+    width: 260px;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: inherit;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.feature-card img {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    margin: 12px 0;
+}
+
+/* ------------------------------
+    REVIEWS (슬라이더 가능)
+------------------------------ */
+.reviews {
+    padding: 80px 40px;
+    background: #eef3ff;
+    text-align: center;
+}
+
+.reviews h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.review-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+}
+
+.review {
+    min-width: 260px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    scroll-snap-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    font-style: italic;
+    color: inherit;
+}
+
+/* ------------------------------
+    FOOTER
+------------------------------ */
+footer {
+    background: #ffffff;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    color: #444;
+}
+
+/* 푸터의 다크모드 스타일은 `body.dark-mode` 규칙에서 처리됩니다 */
+
+/* ------------------------------
+    반응형 디자인
+------------------------------ */
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-img img {
+        width: 80%;
+    }
+}
+
+@media (max-width: 600px) {
+    .feature-grid {
+        flex-direction: column;
+    }
+
+    .header {
+        padding: 15px 20px;
+    }
+}
