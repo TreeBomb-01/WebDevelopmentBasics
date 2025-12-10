@@ -1,317 +1,855 @@
-/* ------------------------------
-        기본 스타일
------------------------------- */
-/*
-        styles/index.css
-        - 이 파일은 사이트의 전반적인 스타일을 담고 있습니다.
-        - 큰 섹션별로 주석으로 구분되어 있으며, 라이트/다크 테마는
-            `body.dark-mode` 규칙으로 관리됩니다.
-        - 색상이나 폰트는 이 파일 최상단의 `body` 또는 섹션 변수에서
-            변경하면 전체에 적용됩니다.
-*/
+/**
+ * =====================================================================
+ * LevelUpFit - 메인 스타일시트
+ * =====================================================================
+ * 파일명: css/index.css
+ * 작성일: 2024
+ * 설명: AI 기반 런지 자세 평가 서비스의 전체 스타일 정의
+ * 
+ * [구조]
+ * 1. CSS 변수 (Custom Properties) - 테마 컬러 및 공통 값 정의
+ * 2. 리셋 및 기본 스타일
+ * 3. 레이아웃 컴포넌트 (Header, Navigation, Container)
+ * 4. 섹션별 스타일 (Hero, Features, Process, Demo, FAQ, Footer)
+ * 5. 유틸리티 클래스
+ * 6. 반응형 디자인 (Media Queries)
+ * 7. 애니메이션
+ * =====================================================================
+ */
+
+
+/* =====================================================================
+   1. CSS 변수 (Custom Properties)
+   - CSS 변수를 활용한 테마 시스템 구현
+   - 다크/라이트 모드 전환을 위한 컬러 팔레트 정의
+   ===================================================================== */
+
+:root {
+    /* 브랜드 컬러 팔레트 */
+    --mint: #7EFFDB;           /* 민트색: 주요 강조색 */
+    --turquoise: #40E0D0;      /* 청록색: 프라이머리 컬러 */
+    --skyblue: #6FB1FC;        /* 하늘색: 보조 강조색 */
+    
+    /* 브랜드 그라데이션: 로고 및 강조 요소에 사용 */
+    --brand-gradient: linear-gradient(135deg, var(--mint) 0%, var(--turquoise) 50%, var(--skyblue) 100%);
+    
+    /* 다크 모드 기본값 (기본 테마) */
+    --bg-color: #121212;           /* 배경색 */
+    --card-bg: #1e1e1e;            /* 카드/컨테이너 배경색 */
+    --text-color: #ffffff;          /* 주요 텍스트 색상 */
+    --text-sub: #a0a0a0;           /* 보조 텍스트 색상 */
+    --primary-color: #40E0D0;      /* 프라이머리 액션 색상 */
+    --primary-hover: #2ec4b6;      /* 프라이머리 호버 색상 */
+    --accent-color: #6FB1FC;       /* 액센트 색상 */
+    --nav-bg: rgba(18, 18, 18, 0.95);  /* 네비게이션 배경 (반투명) */
+    --border-color: #333;          /* 테두리 색상 */
+    --shadow: 0 4px 20px rgba(0,0,0,0.5);  /* 그림자 */
+}
+
+/* 라이트 모드 테마 변수 */
+[data-theme="light"] {
+    --bg-color: #f4f6f8;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --text-sub: #666666;
+    --primary-color: #00B4D8;
+    --primary-hover: #0096C7;
+    --accent-color: #48CAE4;
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #ddd;
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+
+/* =====================================================================
+   2. 리셋 및 기본 스타일
+   - 브라우저 기본 스타일 초기화
+   - 전역 타이포그래피 설정
+   ===================================================================== */
+
+/* 접근성을 위한 숨김 클래스 (Screen Reader Only)
+   - 시각적으로는 숨기지만 스크린 리더가 읽을 수 있음 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* 전역 박스 모델 리셋 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Pretendard", sans-serif;
 }
 
+/* Body 기본 스타일 */
 body {
-    background: #f7f9fb;
-    color: #111;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;  /* 테마 전환 애니메이션 */
+    overflow-x: hidden;  /* 가로 스크롤 방지 */
 }
 
-body.dark-mode {
-    background: #181a1b;
-    color: #f7f9fb;
-}
-
-/* 다크모드 전용 스타일 */
-body.dark-mode .header {
-    background: #23272a;
-    border-bottom: 1px solid #333;
-}
-
-body.dark-mode .logo img {
-    filter: brightness(0.85);
-}
-
-body.dark-mode .nav-list li a {
-    color: #f7f9fb;
-}
-
-body.dark-mode #darkToggle {
-    color: #f7f9fb;
-}
-
-body.dark-mode .hero-text h2,
-body.dark-mode .hero-text p {
-    color: #f7f9fb;
-}
-
-body.dark-mode .features {
-    background: #23272a;
-}
-
-body.dark-mode .feature-card {
-    background: #23272a;
-    color: #f7f9fb;
-    box-shadow: 0 5px 14px rgba(0,0,0,0.18);
-}
-
-body.dark-mode .reviews {
-    background: #181a1b;
-    color: #f7f9fb;
-}
-
-body.dark-mode .review {
-    background: #23272a;
-    color: #f7f9fb;
-}
-
-body.dark-mode footer {
-    background: #23272a;
-    color: #f7f9fb;
-    border-top: 1px solid #333;
-}
-
-/* 다크모드에서 태양 아이콘을 흰색처럼 보이게 함 */
-body.dark-mode #darkToggle img[alt="Light Mode"] {
-    filter: invert(1) brightness(2) saturate(0);
-}
-
+/* 링크 기본 스타일 리셋 */
 a {
     text-decoration: none;
     color: inherit;
 }
 
-/* ------------------------------
-    HEADER
------------------------------- */
-.header {
-    width: 100%;
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #ffffff;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid #eee;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    height: 40px;
-}
-
-.logo img {
-    height: 40px;
-    width: auto;
-    display: block;
-}
-
-.nav-list {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+/* 리스트 기본 스타일 리셋 */
+ul {
     list-style: none;
 }
 
-.nav-list li a {
-    font-weight: 500;
-    color: #111;
+/* 컨테이너: 콘텐츠 최대 너비 제한 및 중앙 정렬 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-#darkToggle {
-    padding: 6px 10px;
-    font-size: 18px;
-    background: transparent;
+
+/* =====================================================================
+   3. 공통 컴포넌트 스타일
+   ===================================================================== */
+
+/* 기본 버튼 스타일 */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: var(--brand-gradient);
+    color: #121212;
+    font-weight: 700;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
-    color: inherit;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.3);
 }
 
-/* ------------------------------
-    HERO SECTION
------------------------------- */
-.hero {
+/* 버튼 호버 효과 */
+.btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+    box-shadow: 0 10px 20px rgba(64, 224, 208, 0.5);
+}
+
+
+/* =====================================================================
+   4. Header (네비게이션) 스타일
+   - 고정 헤더 (Fixed Position)
+   - 반투명 배경 + 블러 효과
+   ===================================================================== */
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: var(--nav-bg);
+    backdrop-filter: blur(10px);  /* 배경 블러 효과 */
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 80px 60px;
-    gap: 40px;
+    justify-content: space-between;
+    padding: 0 5%;
 }
 
-.hero-text {
-    max-width: 550px;
-}
-
-.hero-text h2 {
-    font-size: 42px;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 20px;
-}
-
-.hero-text p {
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-.hero-btns {
+/* 로고 래퍼: 로고 이미지를 포함 */
+.logo-wrapper {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
 }
 
-.cta {
-    background: #5d85f0;
-    padding: 12px 24px;
-    color: white;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: 0.3s;
+/* 로고 이미지 스타일 */
+.logo-img {
+    height: 40px;
+    width: auto;
 }
 
-.cta:hover {
-    transform: scale(1.05);
-    background: #466edb;
+/* 네비게이션 메뉴 */
+.nav-menu {
+    display: flex;
+    gap: 30px;
 }
 
-.cta.secondary {
-    background: #ffffff;
-    color: #5d85f0;
-    border: 2px solid #5d85f0;
+/* 네비게이션 링크 */
+.nav-menu li a {
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
 }
 
-.cta.secondary:hover {
-    background: #5d85f0;
-    color: white;
+/* 네비게이션 링크 호버/포커스 상태 */
+.nav-menu li a:hover,
+.nav-menu li a:focus {
+    color: var(--primary-color);
+    outline: none;
 }
 
-.hero-img img {
-    width: 420px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+/* 네비게이션 링크 하단 밑줄 애니메이션 */
+.nav-menu li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s;
 }
 
-/* ------------------------------
-    FEATURES
------------------------------- */
-.features {
-    padding: 80px 40px;
-    text-align: center;
+.nav-menu li a:hover::after {
+    width: 100%;
+}
+
+/* 테마 토글 버튼 */
+.theme-toggle {
     background: none;
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
 }
 
-.features h2 {
-    font-size: 32px;
+.theme-toggle:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+/* 햄버거 메뉴 (모바일용) - 기본적으로 숨김 */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+/* =====================================================================
+   5. 섹션 공통 스타일
+   ===================================================================== */
+
+section {
+    padding: 100px 0;
+}
+
+/* 섹션 제목 */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    font-weight: 700;
+}
+
+
+/* =====================================================================
+   6. Hero Section (메인 배너)
+   ===================================================================== */
+
+.hero {
+    height: 100vh;
+    padding: 0;  /* 전체 높이를 위해 기본 패딩 리셋 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(64, 224, 208, 0.15) 0%, transparent 70%);
+    position: relative;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Hero 제목 강조 텍스트 (그라데이션) */
+.hero-content h1 span {
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--text-sub);
     margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    word-break: keep-all;  /* 한글 단어 단위 줄바꿈 */
 }
 
-.feature-grid {
+
+/* =====================================================================
+   7. Video Showcase Section (서비스 시연)
+   - 좌측 컨트롤 + 우측 스마트폰 프레임 레이아웃
+   - 자동 진행 바 및 영상 전환 기능
+   ===================================================================== */
+
+.video-showcase {
+    background-color: var(--bg-color);
+    padding-bottom: 100px;
+}
+
+/* 프리뷰 콘텐츠: 좌우 2열 레이아웃 */
+.preview-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ========== 좌측: 컨트롤 버튼 영역 ========== */
+.preview-controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 컨트롤 아이템 (각 기능 버튼) */
+.control-item {
+    padding: 25px;
+    border-radius: 15px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.control-item:hover {
+    transform: translateX(5px);
+    border-color: var(--primary-color);
+}
+
+/* 활성화된 컨트롤 아이템 */
+.control-item.active {
+    border-color: var(--primary-color);
+    background-color: rgba(64, 224, 208, 0.05);
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.1);
+}
+
+.control-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-item p {
+    font-size: 0.95rem;
+    color: var(--text-sub);
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/* 컨트롤 아이콘 (원형 배지) */
+.control-icon {
+    width: 30px;
+    height: 30px;
+    background: var(--brand-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #121212;
+}
+
+/* 진행 바 배경 */
+.progress-bar-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+}
+
+/* 진행 바 채우기 (영상 재생 시간에 따라 width 변경) */
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+}
+
+/* ========== 우측: 스마트폰 프레임 ========== */
+.preview-visual {
+    flex: 0 0 280px;
     display: flex;
     justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
 }
 
-.feature-card {
-    background: white;
+/* 스마트폰 프레임 디자인 */
+.phone-frame {
     width: 260px;
-    padding: 30px 20px;
-    border-radius: 12px;
+    height: 520px;
+    background: #1a1a1a;
+    border: 8px solid #333;
+    border-radius: 32px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.phone-frame:hover {
+    transform: translateY(-10px);
+}
+
+/* 모바일 화면 내부 */
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    position: relative;
+}
+
+/* 비디오 스타일 */
+.phone-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+}
+
+
+/* =====================================================================
+   8. Stats Section (서비스 통계/신뢰도)
+   ===================================================================== */
+
+.stats-section {
+    padding: 60px 0;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 통계 그리드: 3열 레이아웃 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     text-align: center;
-    color: inherit;
-    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
-    transition: 0.3s;
 }
 
+/* 통계 항목 */
+.stat-item h3 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.stat-item p {
+    color: var(--text-sub);
+    font-weight: 700;
+}
+
+
+/* =====================================================================
+   9. Features Section (기능 소개)
+   ===================================================================== */
+
+/* 기능 카드 그리드 레이아웃 */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* 기능 카드 */
+.feature-card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: left;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* 기능 카드 호버 효과 */
 .feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transform: translateY(-10px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary-color);
 }
 
-.feature-card img {
-    width: 60px;
-    margin-bottom: 15px;
+/* 기능 아이콘 */
+.feature-icon {
+    font-size: 2.5rem;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    display: inline-block;
 }
 
 .feature-card h3 {
-    margin: 12px 0;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
-/* ------------------------------
-    REVIEWS (슬라이더 가능)
------------------------------- */
-.reviews {
-    padding: 80px 40px;
-    background: #eef3ff;
-    text-align: center;
+.feature-card p {
+    color: var(--text-sub);
+    word-break: keep-all;
 }
 
-.reviews h2 {
-    font-size: 28px;
-    margin-bottom: 30px;
+
+/* =====================================================================
+   8. Process Section (이용 절차)
+   ===================================================================== */
+
+.process-section {
+    background-color: var(--bg-color);
 }
 
-.review-slider {
+/* 단계 컨테이너 */
+.process-steps {
     display: flex;
-    overflow-x: auto;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-wrap: wrap;
     gap: 20px;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 10px;
 }
 
-.review {
-    min-width: 260px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    scroll-snap-align: center;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    font-style: italic;
-    color: inherit;
-}
-
-/* ------------------------------
-    FOOTER
------------------------------- */
-footer {
-    background: #ffffff;
+/* 각 단계 항목 */
+.step {
+    flex: 1;
     text-align: center;
+    min-width: 200px;
+    position: relative;
+}
+
+/* 단계 아이콘 */
+.step-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--card-bg);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(64, 224, 208, 0.2);
+}
+
+.step h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    word-break: keep-all;
+}
+
+
+/* =====================================================================
+   9. Demo Section (체험 영역)
+   ===================================================================== */
+
+.demo-section {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-color) 100%);
+    text-align: center;
+}
+
+/* 데모 박스 컨테이너 */
+.demo-box {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+/* 데모 폼 레이아웃 */
+.demo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* 폼 그룹 */
+.form-group {
+    text-align: left;
+}
+
+/* 폼 레이블 */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--text-sub);
+}
+
+/* 폼 컨트롤 (입력 필드, 셀렉트 등) */
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+/* 파일 업로드 UI */
+.file-upload-ui {
+    border: 2px dashed var(--border-color);
+    padding: 30px;
+    border-radius: 10px;
+    color: var(--text-sub);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-upload-ui:hover,
+.file-upload-ui:focus {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    outline: none;
+}
+
+/* 결과 박스 */
+.result-box {
+    margin-top: 30px;
     padding: 25px;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
-    color: #444;
+    background-color: rgba(64, 224, 208, 0.05);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    text-align: left;
+    display: none;  /* 기본적으로 숨김, JS로 표시 */
 }
 
-/* 푸터의 다크모드 스타일은 `body.dark-mode` 규칙에서 처리됩니다 */
+/* 결과 항목 */
+.result-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
 
-/* ------------------------------
-    반응형 디자인
------------------------------- */
-@media (max-width: 900px) {
-    .hero {
-        flex-direction: column;
-        text-align: center;
+.result-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* 점수 뱃지 */
+.score-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+/* 좋은 점수 (녹색) */
+.score-good {
+    background-color: rgba(0, 242, 96, 0.2);
+    color: #00f260;
+}
+
+/* 나쁜 점수 (빨간색) */
+.score-bad {
+    background-color: rgba(255, 99, 71, 0.2);
+    color: #ff6347;
+}
+
+
+/* =====================================================================
+   10. FAQ Section (자주 묻는 질문)
+   - HTML5 <details>/<summary> 태그 스타일링
+   ===================================================================== */
+
+.faq-section {
+    background-color: var(--bg-color);
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* details 요소 (아코디언 아이템) */
+details {
+    background-color: var(--card-bg);
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+/* summary 요소 (아코디언 헤더) */
+summary {
+    padding: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;  /* 기본 화살표 제거 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* WebKit 브라우저 기본 마커 제거 */
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 커스텀 토글 아이콘 */
+summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: transform 0.3s;
+}
+
+/* 열린 상태에서 아이콘 회전 */
+details[open] summary::after {
+    transform: rotate(45deg);
+}
+
+/* FAQ 콘텐츠 영역 */
+.faq-content {
+    padding: 0 20px 20px;
+    color: var(--text-sub);
+    line-height: 1.6;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+
+/* =====================================================================
+   11. Footer (푸터)
+   ===================================================================== */
+
+footer {
+    padding: 50px 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-sub);
+}
+
+footer .logo-wrapper {
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================================
+   12. 반응형 디자인 (Media Queries)
+   - 모바일 및 태블릿 대응
+   ===================================================================== */
+
+@media (max-width: 768px) {
+    /* Hero 섹션 타이틀 크기 축소 */
+    .hero-content h1 {
+        font-size: 2.2rem;
     }
-
-    .hero-img img {
-        width: 80%;
+    
+    /* Process 단계를 세로로 배치 */
+    .process-steps {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Stats 섹션: 모바일에서 1열 레이아웃 */
+    .stats-grid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 30px;
+    }
+    
+    /* 햄버거 메뉴 표시 */
+    .hamburger {
+        display: block;
+    }
+    
+    /* 모바일 네비게이션 메뉴 (슬라이드 인) */
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        right: -100%;  /* 기본적으로 화면 밖에 위치 */
+        width: 70%;
+        height: 100vh;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+        transition: 0.4s;
+        border-left: 1px solid var(--border-color);
+    }
+    
+    /* 모바일 메뉴 활성화 상태 */
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    /* Video Showcase: 모바일에서 세로 배치 (영상 먼저) */
+    .preview-content {
+        flex-direction: column-reverse;
+        gap: 30px;
+    }
+    
+    .preview-visual {
+        flex: none;
+        width: 100%;
     }
 }
 
-@media (max-width: 600px) {
-    .feature-grid {
-        flex-direction: column;
-    }
 
-    .header {
-        padding: 15px 20px;
-    }
+/* =====================================================================
+   13. 애니메이션
+   - 스크롤 시 요소가 나타나는 fade-in-up 효과
+   ===================================================================== */
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* visible 클래스 추가 시 애니메이션 완료 상태 */
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
