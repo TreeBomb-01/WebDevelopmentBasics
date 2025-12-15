@@ -39,12 +39,12 @@ const body = document.body;
  */
 themeToggle.addEventListener('click', () => {
     // 현재 테마 확인 및 전환
-    if (body.getAttribute('data-theme') === 'light') {
+    if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i> Light';
+    } else {
         body.setAttribute('data-theme', 'dark');
         themeToggle.innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i> Dark';
-    } else {
-        body.setAttribute('data-theme', 'light');
-        themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i> Light';
     }
 });
 
@@ -283,16 +283,36 @@ function updateVideoState(index) {
 
 // 비디오 요소가 존재하는 경우에만 이벤트 리스너 등록
 if (previewVideo) {
+    let animationFrameId;
+
     /**
-     * 비디오 재생 시간 업데이트 이벤트
-     * - 진행 바를 영상 재생 시간에 맞춰 채움
+     * 진행 바 업데이트 함수 (requestAnimationFrame 사용으로 부드러운 움직임 구현)
      */
-    previewVideo.addEventListener('timeupdate', () => {
+    function updateProgress() {
         if (previewVideo.duration) {
             const percentage = (previewVideo.currentTime / previewVideo.duration) * 100;
             progressFills[currentVideoIndex].style.width = percentage + '%';
         }
+        
+        if (!previewVideo.paused && !previewVideo.ended) {
+            animationFrameId = requestAnimationFrame(updateProgress);
+        }
+    }
+
+    /**
+     * 비디오 재생 이벤트
+     * - 부드러운 진행 바 업데이트 시작
+     */
+    previewVideo.addEventListener('play', () => {
+        cancelAnimationFrame(animationFrameId);
+        updateProgress();
     });
+
+    /**
+     * 비디오 일시정지/종료 시 업데이트 중단
+     */
+    previewVideo.addEventListener('pause', () => cancelAnimationFrame(animationFrameId));
+    previewVideo.addEventListener('ended', () => cancelAnimationFrame(animationFrameId));
 
     /**
      * 비디오 종료 이벤트
