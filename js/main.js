@@ -1,11 +1,3 @@
-/**
- * LevelUpFit - 메인 JavaScript 파일
- * 파일명: js/main.js
- * 작성일: 2025
- * 주요 기능: 테마 토글, 모바일 메뉴, 스크롤 애니메이션, AI 분석 데모, 비디오 프리뷰
- */
-
-
 // 1. 테마 토글 기능
 
 const themeToggle = document.getElementById('themeToggle');

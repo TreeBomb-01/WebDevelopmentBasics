@@ -23,7 +23,7 @@
 
         <nav role="navigation">
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#preview">서비스 시연</a></li>
+                <li><a href="#preview">미리보기</a></li>
                 <li><a href="#features">핵심 기능</a></li>
                 <li><a href="#process">사용 방법</a></li>
                 <li><a href="#demo">AI 분석 체험</a></li>
@@ -182,7 +182,6 @@
         <section id="demo" class="demo-section" aria-labelledby="demo-title">
             <div class="container fade-in-up">
                 <h2 id="demo-title" class="section-title">AI 런지 자세 평가 체험</h2>
-                <p class="demo-description">영상을 업로드하면 AI가 즉시 자세를 분석해 드립니다.</p>
                 
                 <div class="demo-box">
                     <div class="demo-form">
@@ -194,7 +193,7 @@
                                 <option value="lv3">Level 3: 고급 (속도/리듬 포함)</option>
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="fileUpload">운동 영상 업로드</label>
                             <div class="file-upload-ui" id="dropZone" role="button" tabindex="0" aria-label="파일 업로드 영역">
@@ -204,12 +203,12 @@
                                 <input type="file" id="fileUpload" class="hidden" accept="video/*">
                             </div>
                         </div>
-
+                        
                         <button class="btn btn-full" id="analyzeBtn">
                             <i class="fas fa-search" aria-hidden="true"></i> 자세 분석 시작
                         </button>
                     </div>
-
+                    
                     <div class="result-box" id="resultBox" aria-live="polite">
                         <h3 class="result-title">
                             <i class="fas fa-file-medical-alt" aria-hidden="true"></i> 분석 리포트
@@ -220,13 +219,13 @@
                             <span class="score-badge score-good">95점 (Good)</span>
                             <p class="result-feedback">"무릎이 발끝 앞으로 나가지 않았습니다. 아주 좋습니다!"</p>
                         </div>
-
+                        
                         <div class="result-item">
                             <strong>2. 가동 범위 (Movement Range)</strong>
                             <span class="score-badge score-bad">65점 (Bad)</span>
                             <p class="result-feedback">"가동범위가 부족합니다. 엉덩이를 더 낮게 내려가 보세요."</p>
                         </div>
-
+                        
                         <div id="advancedFeedback" class="hidden">
                             <div class="result-item">
                                 <strong>3. 수직 정렬 (Vertical Alignment)</strong>
@@ -236,13 +235,14 @@
                         </div>
                     </div>
                 </div>
+                <p class="demo-description">영상을 업로드하면 AI가 즉시 자세를 분석해 드립니다.</p>
             </div>
         </section>
-
+        
         <!-- =====================================================================
-             FAQ Section: 자주 묻는 질문
-             - HTML5 <details>/<summary> 태그 활용: JavaScript 없이 아코디언 구현
-             - 웹 표준을 준수하는 네이티브 HTML 기능 활용
+        FAQ Section: 자주 묻는 질문
+        - HTML5 <details>/<summary> 태그 활용: JavaScript 없이 아코디언 구현
+            - 웹 표준을 준수하는 네이티브 HTML 기능 활용
         ===================================================================== -->
         <section id="faq" class="faq-section" aria-labelledby="faq-title">
             <div class="container fade-in-up">
@@ -279,7 +279,7 @@
             <div class="logo-wrapper">
                 <img src="images/logo.png" alt="LevelUpFit 로고" class="logo-img">
             </div>
-            <p>AI-Powered Exercise Evaluation Prototype<br>Copyright © 2024 LevelUpFit Corp. All rights reserved.</p>
+            <p>AI-Powered Exercise Evaluation Prototype<br>Copyright © 2025 LevelUpFit. All rights reserved.</p>
             
             <div class="footer-social">
                 <a href="https://github.com/LevelUpFit" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
